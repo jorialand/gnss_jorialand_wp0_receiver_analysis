@@ -1,0 +1,26 @@
+
+LOS_IDX = {
+"SOD":0,
+"DOY":1,
+"YEAR":2,
+"PRN":3,
+"ELEV":4,
+"AZIM":5,
+"TOF[ms]":6,
+"MEAS[m]":7,
+"SNR[db-Hz]":8,
+"SAT-X[m]":9,
+"SAT-Y[m]":10,
+"SAT-Z[m]":11,
+"VEL-X[m/s]":12,
+"VEL-Y[m/s]":13,
+"VEL-Z[m/s]":14,
+"RANGE[m]":15,
+"SV-CLK[m]":16,
+"DTR[m]":17,
+"TGD[m]":18,
+"TROPO[m]":19,
+"STEC[m]":20,
+"VTEC[m]":21,
+"MPP[elev]":22
+}
