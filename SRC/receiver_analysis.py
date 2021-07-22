@@ -75,7 +75,7 @@ print('Reading Configuration file',CfgFile)
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Get LOS file full path
-LosFile = Scen + '/OUT/LOS/' + Conf["LOS_FILE"]
+LosFile = Scen + 'OUT/LOS/' + Conf["LOS_FILE"]
 
 #-----------------------------------------------------------------------
 # PLOT SATELLITE ANALYSES
@@ -117,3 +117,26 @@ if(Conf["PLOT_SATTRK"] == '1'):
 
     # Configure plot and call plot generation function
     SatFunctions.plotSatTracks(LosData)
+
+# Plot Satellite Velocity figures
+if(Conf['PLOT_SATVEL'] == '1'):
+    LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[LOS_IDX["SOD"], LOS_IDX["PRN"],
+                                LOS_IDX['VEL-X[m/s]'], LOS_IDX['VEL-Y[m/s]'], LOS_IDX['VEL-Z[m/s]'],
+                                LOS_IDX["ELEV"]])
+
+    print('Plot Satellite Velocities ...')
+    SatFunctions.plotSatVel(LosData)
+
+# Plot Satellite Clock figures
+if(Conf['PLOT_SATCLK'] == '1'):
+    LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[LOS_IDX["SOD"],
+                                LOS_IDX['SV-CLK[m]'],
+                                LOS_IDX['TGD[m]'],
+                                LOS_IDX['DTR[m]'],
+                                LOS_IDX["PRN"],
+                                ])
+
+    print('Plot Satellite Clocks ...')
+    SatFunctions.plotSatClk(LosData)
