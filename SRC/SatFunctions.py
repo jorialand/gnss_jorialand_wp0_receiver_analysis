@@ -13,9 +13,12 @@
 import sys, os
 import numpy as np
 from pandas import unique
-from SRC.interfaces import LOS_IDX
+
+
+
 # sys.path.append(os.getcwd() + '/' + \
 #     os.path.dirname(sys.argv[0]) + '/' + 'COMMON')
+from SRC.interfaces import LOS_IDX
 from SRC.COMMON import GnssConstants
 from SRC.COMMON.Plots import generatePlot
 from SRC.COMMON.Coordinates import xyz2llh
