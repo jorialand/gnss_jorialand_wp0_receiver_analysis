@@ -13,10 +13,12 @@
 
 import sys, os
 from collections import OrderedDict
-from interfaces import LOS_IDX
 from pandas import read_csv
-from yaml import dump
-import SatFunctions
+# from yaml import dump
+
+from SRC.interfaces import LOS_IDX
+import SRC.SatFunctions as SatFunctions
+import SRC.IonoFunctions as IonoFunctions
 
 #######################################################
 # INTERNAL FUNCTIONS 
@@ -81,7 +83,7 @@ LosFile = Scen + 'OUT/LOS/' + Conf["LOS_FILE"]
 # PLOT SATELLITE ANALYSES
 #-----------------------------------------------------------------------
 
-# Plot Satellite Visibility figures
+# Plot Satellite Visibility figure
 if(Conf["PLOT_SATVIS"] == '1'):
     # Read the cols we need from LOS file
     LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None,\
@@ -92,7 +94,7 @@ if(Conf["PLOT_SATVIS"] == '1'):
     # Configure plot and call plot generation function
     SatFunctions.plotSatVisibility(LosData)
 
-# Plot Satellite Geometrical Ranges figures
+# Plot Satellite Geometrical Ranges figure
 if(Conf["PLOT_SATRNG"] == '1'):
     # Read the cols we need from LOS file
     LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None,\
@@ -103,7 +105,7 @@ if(Conf["PLOT_SATRNG"] == '1'):
     # Configure plot and call plot generation function
     SatFunctions.plotSatGeomRnge(LosData)
 
-# Plot Satellite Tracks figures
+# Plot Satellite Tracks figure
 if(Conf["PLOT_SATTRK"] == '1'):
     # Read the cols we need from LOS file
     LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None,\
@@ -118,7 +120,7 @@ if(Conf["PLOT_SATTRK"] == '1'):
     # Configure plot and call plot generation function
     SatFunctions.plotSatTracks(LosData)
 
-# Plot Satellite Velocity figures
+# Plot Satellite Velocity figure
 if(Conf['PLOT_SATVEL'] == '1'):
     LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
                        usecols=[LOS_IDX["SOD"], LOS_IDX["PRN"],
@@ -128,7 +130,7 @@ if(Conf['PLOT_SATVEL'] == '1'):
     print('Plot Satellite Velocities ...')
     SatFunctions.plotSatVel(LosData)
 
-# Plot Satellite Clock figures
+# Plot Satellite Clock figure
 if(Conf['PLOT_SATCLK'] == '1'):
     LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
                        usecols=[LOS_IDX["SOD"],
@@ -140,3 +142,37 @@ if(Conf['PLOT_SATCLK'] == '1'):
 
     print('Plot Satellite Clocks ...')
     SatFunctions.plotSatClk(LosData)
+
+# Plot Satellite Clock Total Group Delay figure
+if(Conf['PLOT_SATTGD'] == '1'):
+    LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[LOS_IDX["SOD"],
+                                LOS_IDX['TGD[m]'],
+                                LOS_IDX["PRN"],
+                                ])
+
+    print('Plot Satellite Clock Total Group Delay (TGD) ...')
+    SatFunctions.plotSatTGD(LosData)
+
+# Plot Satellite Clock Total Group Delay figure
+if(Conf['PLOT_SATDTR'] == '1'):
+    LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[LOS_IDX["SOD"],
+                                LOS_IDX['DTR[m]'],
+                                LOS_IDX["ELEV"],
+                                ])
+
+    print('Plot Satellite Clock Delay Total Room (DTR) ...')
+    SatFunctions.plotSatDTR(LosData)
+
+# Plot of slant ionospheric delays (STEC in meters) from Klobuchar model for all satellites
+# as a function of the hour of the day. Color: satellite elevation.
+if(Conf['PLOT_IONO_STEC_TIME_ELEV'] == '1'):
+    LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[LOS_IDX["STEC[m]"],
+                                LOS_IDX['SOD'],
+                                LOS_IDX["ELEV"],
+                                ])
+
+    print('Plot Satellite STEC Vs TIME (ELEV) ...')
+    IonoFunctions.plotIono_STEC_Time_Elev(LosData)

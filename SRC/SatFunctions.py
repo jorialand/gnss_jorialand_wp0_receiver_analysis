@@ -13,16 +13,16 @@
 import sys, os
 import numpy as np
 from pandas import unique
-from interfaces import LOS_IDX
-sys.path.append(os.getcwd() + '/' + \
-    os.path.dirname(sys.argv[0]) + '/' + 'COMMON')
-from COMMON import GnssConstants
-from COMMON.Plots import generatePlot
-from COMMON.Coordinates import xyz2llh
-from COMMON.Utils import compute_three_vectors_module, \
+from SRC.interfaces import LOS_IDX
+# sys.path.append(os.getcwd() + '/' + \
+#     os.path.dirname(sys.argv[0]) + '/' + 'COMMON')
+from SRC.COMMON import GnssConstants
+from SRC.COMMON.Plots import generatePlot
+from SRC.COMMON.Coordinates import xyz2llh
+from SRC.COMMON.Utils import compute_three_vectors_module, \
     compute_sat_clk_correction
 
-# Plot Satellite Visibility Figures
+# Plot Satellite Visibility Figure
 def plotSatVisibility(LosData):
     PlotConf = {}
 
@@ -65,7 +65,7 @@ def plotSatVisibility(LosData):
     # Call generatePlot from Plots library
     generatePlot(PlotConf)
 
-# Plot Satellite Geometrical Range Figures
+# Plot Satellite Geometrical Range Figure
 def plotSatGeomRnge(LosData):
     PlotConf = {}
 
@@ -103,7 +103,7 @@ def plotSatGeomRnge(LosData):
     # Call generatePlot from Plots library
     generatePlot(PlotConf)
 
-# Plot Satellite Tracks Figures
+# Plot Satellite Tracks Figure
 def plotSatTracks(LosData):
     PlotConf = {}
 
@@ -167,7 +167,7 @@ def plotSatTracks(LosData):
     # Call generatePlot from Plots library
     generatePlot(PlotConf)
 
-# Plot Satellite Velocities Figures
+# Plot Satellite Velocities Figure
 def plotSatVel(LosData):
     PlotConf = {}
 
@@ -205,7 +205,7 @@ def plotSatVel(LosData):
     # Call generatePlot from Plots library
     generatePlot(PlotConf)
 
-# Plot Satellite Clock Figures
+# Plot Satellite Clock Figure
 def plotSatClk(LosData):
     PlotConf = {}
 
@@ -250,4 +250,86 @@ def plotSatClk(LosData):
 
     # Call generatePlot from Plots library
     generatePlot(PlotConf)
+
+# Plot Satellite Clock Total Group Delay (TGD) Figure
+def plotSatTGD(LosData):
+    PlotConf = {}
+
+    PlotConf["Type"] = "Lines"
+    PlotConf["FigSize"] = (8.4, 6.6)
+    PlotConf["Title"] = "Satellite TGD from TLSA on Year 2015" \
+                        " DoY 006"
+
+    PlotConf["yLabel"] = "TGD[m]"
+
+    PlotConf["xLabel"] = "Hour of DoY 006"
+    PlotConf["xTicks"] = range(0, 25)
+    PlotConf["xLim"] = [0, 24]
+
+    PlotConf["Grid"] = 1
+
+    PlotConf["Marker"] = '|'
+    PlotConf["LineWidth"] = 15
+
+    PlotConf["ColorBar"] = "gnuplot"
+    PlotConf["ColorBarLabel"] = "GPS-PRN"
+    PlotConf["ColorBarMin"] = 0
+    PlotConf["ColorBarMax"] = max(unique(LosData[LOS_IDX["PRN"]])) + 1
+    # PlotConf["zTicks"] = sorted(unique(LosData[LOS_IDX["PRN"]]))
+    # PlotConf["zTicksLabels"] = sorted(unique(LosData[LOS_IDX["PRN"]]))
+
+
+    PlotConf["xData"] = {}
+    PlotConf["yData"] = {}
+    PlotConf["zData"] = {}
+    for prn in sorted(unique(LosData[LOS_IDX["PRN"]])):
+        Label = "G" + ("%02d" % prn)
+        FilterCond = LosData[LOS_IDX["PRN"]] == prn
+        PlotConf["xData"][Label] = LosData[LOS_IDX["SOD"]][FilterCond] / GnssConstants.S_IN_H
+        PlotConf["yData"][Label] = LosData[LOS_IDX['TGD[m]']][FilterCond] #/ GnssConstants.M_IN_KM
+        PlotConf["zData"][Label] = LosData[LOS_IDX["PRN"]][FilterCond]
+
+    PlotConf["Path"] = sys.argv[1] + '/OUT/LOS/SAT/' + 'SAT_TGD_TLSA_D006Y15.png'
+
+    # Call generatePlot from Plots library
+    generatePlot(PlotConf)
+
+# Plot Satellite (DTR) Figure
+def plotSatDTR(LosData):
+    PlotConf = {}
+
+    PlotConf["Type"] = "Lines"
+    PlotConf["FigSize"] = (8.4, 7.6)
+    PlotConf["Title"] = "Satellite Relativistic Effect (DTR) from TLSA on Year 2015" \
+                        " DoY 006"
+
+    PlotConf["yLabel"] = "DTR[m]"
+
+    PlotConf["xLabel"] = "Hour of DoY 006"
+    PlotConf["xTicks"] = range(0, 25)
+    PlotConf["xLim"] = [0, 24]
+
+    PlotConf["Grid"] = 1
+
+    PlotConf["Marker"] = '.'
+    PlotConf["LineWidth"] = 0.75
+
+    PlotConf["ColorBar"] = "gnuplot"
+    PlotConf["ColorBarLabel"] = "Elevation [deg]"
+    PlotConf["ColorBarMin"] = 0.
+    PlotConf["ColorBarMax"] = 90.
+
+    PlotConf["xData"] = {}
+    PlotConf["yData"] = {}
+    PlotConf["zData"] = {}
+    Label = 0
+    PlotConf["xData"][Label] = LosData[LOS_IDX["SOD"]] / GnssConstants.S_IN_H
+    PlotConf["yData"][Label] = LosData[LOS_IDX["DTR[m]"]]
+    PlotConf["zData"][Label] = LosData[LOS_IDX["ELEV"]]
+
+    PlotConf["Path"] = sys.argv[1] + '/OUT/LOS/SAT/' + 'SAT_DTR_TLSA_D006Y15.png'
+
+    # Call generatePlot from Plots library
+    generatePlot(PlotConf)
+
 
