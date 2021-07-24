@@ -1,7 +1,7 @@
 """
 Functions for plotting the IONOSPHERE related figures, WP0.
 Author: Horia Ghionoiu Martínez, GNSS Academy
-23/7/2021
+Friday, 23/7/2021
 """
 
 import sys, os

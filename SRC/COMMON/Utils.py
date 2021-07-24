@@ -16,3 +16,11 @@ def compute_three_vectors_module(x, y, z):
 def compute_sat_clk_correction(SV_CLK, DTR, TGD):
     return SV_CLK + DTR - TGD
 
+def compute_tropo_ztd(STD, ELEV):
+    ZTD = np.zeros((STD.size))
+
+    for i in range(ZTD.size):
+        ZTD[i] = STD[i] / ( 1.001 / np.sqrt(0.002001 + np.sin(ELEV[i]) ** 2) )
+
+    return ZTD
+

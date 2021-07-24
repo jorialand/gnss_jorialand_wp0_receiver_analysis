@@ -22,8 +22,7 @@ from SRC.interfaces import LOS_IDX
 from SRC.COMMON import GnssConstants
 from SRC.COMMON.Plots import generatePlot
 from SRC.COMMON.Coordinates import xyz2llh
-from SRC.COMMON.Utils import compute_three_vectors_module, \
-    compute_sat_clk_correction
+from SRC.COMMON.Utils import compute_three_vectors_module, compute_sat_clk_correction
 
 # Plot Satellite Visibility Figure
 def plotSatVisibility(LosData):
