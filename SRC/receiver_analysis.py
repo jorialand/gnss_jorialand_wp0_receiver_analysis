@@ -20,6 +20,7 @@ from SRC.interfaces import LOS_IDX
 import SRC.SatFunctions as SatFunctions
 import SRC.IonoFunctions as IonoFunctions
 import SRC.TropoFunctions as TropoFunctions
+import SRC.MeasFunctions as MeasFunctions
 
 #######################################################
 # INTERNAL FUNCTIONS 
@@ -208,3 +209,12 @@ if (Conf['PLOT_TROPO_ZTD_TIME_ELEV'] == '1'):
     print('Plot Tropospheric ZTD vs TIME (ELEV) ...')
 
     TropoFunctions.plotTropo_ZTD_Time_Elev(LosData)
+
+if (Conf['PLOT_PSR_TIME_ELEV'] == '1'):
+    LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[LOS_IDX["MEAS[m]"], LOS_IDX["SOD"], LOS_IDX["ELEV"]])
+
+    print('Plot PSR vs TIME (ELEV) ...')
+
+    MeasFunctions.plotMeas_PSR_Time_Elev(LosData)
+
