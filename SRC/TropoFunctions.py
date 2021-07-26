@@ -65,7 +65,9 @@ def plotTropo_ZTD_Time_Elev(LosData):
     # PlotConf["yTicks"] = sorted(unique(LosData[LOS_IDX["VTEC[m]"]]))
     # PlotConf["yTicksLabels"] = sorted(unique(LosData[LOS_IDX["VTEC[m]"]]))
     # PlotConf["yLim"] = [round(min(unique(LosData[LOS_IDX["TROPO[m]"]]))) - 1, round(max(unique(LosData[LOS_IDX["TROPO[m]"]])) + 1)]
-    PlotConf["yLim"] = [2.3156, 2.3172]
+    # PlotConf["yLim"] = [2.3156, 2.3172]
+    # PlotConf["yLim"] = [2., 3.]
+
 
     PlotConf["xLabel"] = "Hour of DoY 006"
     PlotConf["xTicks"] = range(0, 25)

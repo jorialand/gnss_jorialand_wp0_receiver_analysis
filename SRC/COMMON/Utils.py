@@ -20,7 +20,7 @@ def compute_tropo_ztd(STD, ELEV):
     ZTD = np.zeros((STD.size))
 
     for i in range(ZTD.size):
-        ZTD[i] = STD[i] / ( 1.001 / np.sqrt(0.002001 + np.sin(ELEV[i]) ** 2) )
+        ZTD[i] = STD[i] / ( 1.001 / np.sqrt(0.002001 + np.sin(np.deg2rad(ELEV[i])) ** 2) )
 
     return ZTD
 
