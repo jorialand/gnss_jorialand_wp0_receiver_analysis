@@ -256,5 +256,13 @@ if (Conf['PLOT_SATS_vs_TIME'] == '1'):
 
     PosFunctions.PLOT_SATS_vs_TIME(PosData)
 
+if (Conf['PLOT_POS_DOP_vs_TIME'] == '1'):
+    PosData = read_csv(PosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[POS_IDX['GDOP'], POS_IDX['PDOP'], POS_IDX['TDOP'], POS_IDX['SOD']])
+
+    print('Plot Dilution of Precision vs TIME  ...')
+
+    PosFunctions.PLOT_POS_DOP_vs_TIME(PosData)
+
 
 

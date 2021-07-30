@@ -37,6 +37,8 @@ def prepareAxis(PlotConf, ax):
     for key in PlotConf:
         if key == "Title":
             ax.set_title(PlotConf["Title"])
+        # if key == 'Legend':
+        #     ax.legend()
 
         for axis in ["x", "y"]:
             if axis == "x":
@@ -154,7 +156,12 @@ def generateLinesPlot(PlotConf):
         else:
             ax.plot(PlotConf["xData"][Label], PlotConf["yData"][Label],
             PlotConf["Marker"],
-            linewidth = LineWidth)
+            linewidth=LineWidth,
+            label=Label)
+
+    for key in PlotConf:
+        if key == 'Legend':
+            ax.legend()
 
     saveFigure(fig, PlotConf["Path"])
 
