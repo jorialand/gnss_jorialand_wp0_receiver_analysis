@@ -65,6 +65,9 @@ def prepareAxis(PlotConf, ax):
                 if key == axis + "Lim":
                     ax.set_ylim(PlotConf[axis + "Lim"])
 
+                if key == axis + 'ticklabel_format':
+                    ax.ticklabel_format(axis=axis, style=PlotConf[key])
+
         if key == "Grid" and PlotConf[key] == True:
             ax.grid(linestyle='--', linewidth=0.5, which='both')
 
