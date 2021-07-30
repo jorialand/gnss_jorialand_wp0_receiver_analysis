@@ -70,7 +70,7 @@ CfgFile = Scen + '/CFG/receiver_analysis.cfg'
 Conf = readConf(CfgFile)
 
 # Print 
-print('Reading Configuration file',CfgFile)
+print('Reading Configuration file', CfgFile)
 
 #print(dump(Conf))
 
@@ -160,6 +160,10 @@ if(Conf['PLOT_SATDTR'] == '1'):
     print('Plot Satellite Clock Delay Total Room (DTR) ...')
     SatFunctions.plotSatDTR(LosData)
 
+# -----------------------------------------------------------------------
+# PLOT IONOSPHERE ANALYSES
+# -----------------------------------------------------------------------
+
 if(Conf['PLOT_IONO_STEC_TIME_ELEV'] == '1'):
     LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
                        usecols=[LOS_IDX["STEC[m]"],
@@ -194,6 +198,10 @@ if(Conf['PLOT_IONO_PRN_TIME_VTEC'] == '1'):
 
     IonoFunctions.plotIono_PRN_Time_VTEC(LosData)
 
+# -----------------------------------------------------------------------
+# PLOT TROPOSPHERE ANALYSES
+# -----------------------------------------------------------------------
+
 if(Conf['PLOT_TROPO_STD_TIME_ELEV'] == '1'):
     LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
                        usecols=[LOS_IDX["TROPO[m]"], LOS_IDX["SOD"], LOS_IDX["ELEV"]])
@@ -210,6 +218,10 @@ if (Conf['PLOT_TROPO_ZTD_TIME_ELEV'] == '1'):
 
     TropoFunctions.plotTropo_ZTD_Time_Elev(LosData)
 
+# -----------------------------------------------------------------------
+# PLOT MEASUREMENT ANALYSES
+# -----------------------------------------------------------------------
+
 if (Conf['PLOT_PSR_TIME_ELEV'] == '1'):
     LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
                        usecols=[LOS_IDX["MEAS[m]"], LOS_IDX["SOD"], LOS_IDX["ELEV"]])
@@ -217,4 +229,23 @@ if (Conf['PLOT_PSR_TIME_ELEV'] == '1'):
     print('Plot PSR vs TIME (ELEV) ...')
 
     MeasFunctions.plotMeas_PSR_Time_Elev(LosData)
+
+if (Conf['PLOT_RESIDUALS_TIME_PRN'] == '1'):
+    LosData = read_csv(LosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[LOS_IDX['SV-CLK[m]'], LOS_IDX['TGD[m]'], LOS_IDX['DTR[m]'], LOS_IDX["MEAS[m]"],
+                                LOS_IDX['RANGE[m]'], LOS_IDX['STEC[m]'], LOS_IDX["TROPO[m]"], LOS_IDX["PRN"], LOS_IDX["SOD"]])
+
+    print('Plot Residuals C1 vs TIME (PRN) ...')
+
+    MeasFunctions.plotMeas_ResidualsC1(LosData)
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#>>>>> POS FILE ANALYSES
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+# Get POS file full path
+LosFile = Scen + 'OUT/POS/' + Conf["POS_FILE"]
+
+
 
