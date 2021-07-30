@@ -16,11 +16,12 @@ from collections import OrderedDict
 from pandas import read_csv
 # from yaml import dump
 
-from SRC.interfaces import LOS_IDX
+from SRC.interfaces import LOS_IDX, POS_IDX
 import SRC.SatFunctions as SatFunctions
 import SRC.IonoFunctions as IonoFunctions
 import SRC.TropoFunctions as TropoFunctions
 import SRC.MeasFunctions as MeasFunctions
+import SRC.PosFunctions as PosFunctions
 
 #######################################################
 # INTERNAL FUNCTIONS 
@@ -245,7 +246,15 @@ if (Conf['PLOT_RESIDUALS_TIME_PRN'] == '1'):
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Get POS file full path
-LosFile = Scen + 'OUT/POS/' + Conf["POS_FILE"]
+PosFile = Scen + 'OUT/POS/' + Conf["POS_FILE"]
+
+if (Conf['PLOT_SATS_vs_TIME'] == '1'):
+    PosData = read_csv(PosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[POS_IDX['NSATS'], POS_IDX['SOD']])
+
+    print('Plot N. SATS in PVT vs TIME  ...')
+
+    PosFunctions.PLOT_SATS_vs_TIME(PosData)
 
 
 
