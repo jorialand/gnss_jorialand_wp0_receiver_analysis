@@ -175,6 +175,8 @@ def generateLinesPlot(PlotConf):
             ax2.legend(lines + lines2, labels + labels2, loc=0)
         if PlotConf.get('SecondYAxisLabel'):
             ax2.set_ylabel(PlotConf['SecondYAxisLabel'])
+    else:
+        ax.legend()
 
     saveFigure(fig, PlotConf["Path"])
 
