@@ -276,7 +276,15 @@ if (Conf['PLOT_POS_ENU_PE_vs_TIME'] == '1'):
     PosData = read_csv(PosFile, delim_whitespace=True, skiprows=1, header=None, \
                        usecols=[POS_IDX['EPE[m]'], POS_IDX['NPE[m]'], POS_IDX['UPE[m]'], POS_IDX['SOD']])
 
-    print('Plot Position Error  ...')
+    print('Plot Position Error (ENU) ...')
 
     PosFunctions.PLOT_POS_ENU_PE_vs_TIME(PosData)
+
+if (Conf['PLOT_POS_HVPE_vs_TIME'] == '1'):
+    PosData = read_csv(PosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[POS_IDX['EPE[m]'], POS_IDX['NPE[m]'], POS_IDX['UPE[m]'], POS_IDX['SOD']])
+
+    print('Plot Position Error (H/V)  ...')
+
+    PosFunctions.PLOT_POS_HVPE_vs_TIME(PosData)
 

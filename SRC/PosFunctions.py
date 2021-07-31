@@ -5,7 +5,7 @@ Friday, 29/7/2021
 """
 
 import sys, os
-from pandas import unique
+import numpy as np
 from SRC.interfaces import POS_IDX
 from SRC.COMMON import GnssConstants
 from SRC.COMMON.Plots import generatePlot
@@ -146,7 +146,38 @@ def PLOT_POS_ENU_PE_vs_TIME(PosData):
     generatePlot(PlotConf)
 
 def PLOT_POS_HVPE_vs_TIME(PosData):
-    pass
+
+    PlotConf = {}
+
+    PlotConf["Type"] = "Lines"
+    PlotConf["FigSize"] = (8.4, 6.6)
+    PlotConf["Title"] = "HPE-VPE Position Error from TLSA on Year 2015" \
+                        " DoY 006"
+    PlotConf['Legend'] = True
+
+    PlotConf["yLabel"] = "HPE/VPE[m]"
+
+    PlotConf["xLabel"] = "Hour of DoY 006"
+    PlotConf["xTicks"] = range(0, 25)
+    PlotConf["xLim"] = [0, 24]
+
+    PlotConf["Grid"] = 1
+
+    PlotConf["Marker"] = '-'
+    PlotConf["LineWidth"] = .5
+
+    PlotConf["xData"] = {}
+    PlotConf["yData"] = {}
+
+
+    PlotConf["xData"]['VPE[m]'] = PosData[POS_IDX["SOD"]] / GnssConstants.S_IN_H
+    PlotConf["yData"]['VPE[m]'] = abs(PosData[POS_IDX["UPE[m]"]])
+    PlotConf["xData"]['HPE[m]'] = PosData[POS_IDX["SOD"]] / GnssConstants.S_IN_H
+    PlotConf["yData"]['HPE[m]'] = np.sqrt(PosData[POS_IDX["EPE[m]"]]**2 + PosData[POS_IDX["NPE[m]"]]**2)
+
+    PlotConf["Path"] = sys.argv[1] + '/OUT/POS/' + 'POS_HVPE_Vs_TIME_TLSA_D006Y15.png'
+
+    generatePlot(PlotConf)
 
 def PLOT_POS_NPE_vs_EPE(PosData):
     pass
