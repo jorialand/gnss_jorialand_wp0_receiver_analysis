@@ -75,7 +75,40 @@ def PLOT_POS_DOP_vs_TIME(PosData):
     generatePlot(PlotConf)
 
 def PLOT_OS_HVDOP_vs_TIME(PosData):
-    pass
+    PlotConf = {}
+
+    PlotConf["Type"] = "Lines"
+    PlotConf["FigSize"] = (8.4, 6.6)
+    PlotConf["Title"] = "Dilution of Precision from TLSA on Year 2015" \
+                        " DoY 006"
+    PlotConf['Legend'] = True
+
+    PlotConf["yLabel"] = "HDOP/VDOP"
+    PlotConf["SecondYAxis"] = "NSATS"
+    PlotConf["SecondYAxisLabel"] = "Number of Satellites"
+
+    PlotConf["xLabel"] = "Hour of DoY 006"
+    PlotConf["xTicks"] = range(0, 25)
+    PlotConf["xLim"] = [0, 24]
+
+    PlotConf["Grid"] = 1
+
+    PlotConf["Marker"] = '-'
+    PlotConf["LineWidth"] = 1
+
+    PlotConf["xData"] = {}
+    PlotConf["yData"] = {}
+
+    PlotConf["xData"]['HDOP'] = PosData[POS_IDX["SOD"]] / GnssConstants.S_IN_H
+    PlotConf["yData"]['HDOP'] = PosData[POS_IDX["HDOP"]]
+    PlotConf["xData"]['VDOP'] = PosData[POS_IDX["SOD"]] / GnssConstants.S_IN_H
+    PlotConf["yData"]['VDOP'] = PosData[POS_IDX["VDOP"]]
+    PlotConf["xData"]['NSATS'] = PosData[POS_IDX["SOD"]] / GnssConstants.S_IN_H
+    PlotConf["yData"]['NSATS'] = PosData[POS_IDX["NSATS"]]
+
+    PlotConf["Path"] = sys.argv[1] + '/OUT/POS/' + 'POS_HVDOP_Vs_TIME_TLSA_D006Y15.png'
+
+    generatePlot(PlotConf)
 
 def PLOT_POS_ENU_PE_vs_TIME(PosData):
     pass

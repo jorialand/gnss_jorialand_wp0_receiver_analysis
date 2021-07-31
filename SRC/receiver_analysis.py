@@ -252,7 +252,7 @@ if (Conf['PLOT_SATS_vs_TIME'] == '1'):
     PosData = read_csv(PosFile, delim_whitespace=True, skiprows=1, header=None, \
                        usecols=[POS_IDX['NSATS'], POS_IDX['SOD']])
 
-    print('Plot N. SATS in PVT vs TIME  ...')
+    print('Plot N. SATS in PVT ...')
 
     PosFunctions.PLOT_SATS_vs_TIME(PosData)
 
@@ -260,9 +260,17 @@ if (Conf['PLOT_POS_DOP_vs_TIME'] == '1'):
     PosData = read_csv(PosFile, delim_whitespace=True, skiprows=1, header=None, \
                        usecols=[POS_IDX['GDOP'], POS_IDX['PDOP'], POS_IDX['TDOP'], POS_IDX['SOD']])
 
-    print('Plot Dilution of Precision vs TIME  ...')
+    print('Plot Dilution of Precision  ...')
 
     PosFunctions.PLOT_POS_DOP_vs_TIME(PosData)
+
+if (Conf['PLOT_OS_HVDOP_vs_TIME'] == '1'):
+    PosData = read_csv(PosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[POS_IDX['HDOP'], POS_IDX['VDOP'], POS_IDX['NSATS'], POS_IDX['SOD']])
+
+    print('Plot Dilution of Precision  ...')
+
+    PosFunctions.PLOT_OS_HVDOP_vs_TIME(PosData)
 
 
 

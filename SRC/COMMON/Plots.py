@@ -145,23 +145,36 @@ def generateLinesPlot(PlotConf):
             normalize, cmap = prepareColorBar(PlotConf, ax, PlotConf["zData"])
         if key == "Map" and PlotConf[key] == True:
             drawMap(PlotConf, ax)
-
+    plots = []
     for Label in PlotConf["yData"].keys():
         if "ColorBar" in PlotConf:
-            ax.scatter(PlotConf["xData"][Label], PlotConf["yData"][Label], 
+            ax.scatter(PlotConf["xData"][Label], PlotConf["yData"][Label],
             marker = PlotConf["Marker"],
             linewidth = LineWidth,
             c = cmap(normalize(np.array(PlotConf["zData"][Label]))))
-
+        elif 'SecondYAxis' in PlotConf and PlotConf['SecondYAxis'] == Label:
+            ax2 = ax.twinx()
+            ax2._get_lines.prop_cycler = ax._get_lines.prop_cycler
+            ax2.plot(PlotConf["xData"][Label], PlotConf["yData"][Label],
+            PlotConf["Marker"],
+            linewidth=LineWidth,
+            label=Label)
         else:
             ax.plot(PlotConf["xData"][Label], PlotConf["yData"][Label],
+            # plot_colors.pop() + '-',
             PlotConf["Marker"],
             linewidth=LineWidth,
             label=Label)
 
-    for key in PlotConf:
-        if key == 'Legend':
-            ax.legend()
+
+
+    if PlotConf.get('SecondYAxis'):
+        if PlotConf.get('Legend'):
+            lines, labels = ax.get_legend_handles_labels()
+            lines2, labels2 = ax2.get_legend_handles_labels()
+            ax2.legend(lines + lines2, labels + labels2, loc=0)
+        if PlotConf.get('SecondYAxisLabel'):
+            ax2.set_ylabel(PlotConf['SecondYAxisLabel'])
 
     saveFigure(fig, PlotConf["Path"])
 
