@@ -111,7 +111,39 @@ def PLOT_OS_HVDOP_vs_TIME(PosData):
     generatePlot(PlotConf)
 
 def PLOT_POS_ENU_PE_vs_TIME(PosData):
-    pass
+
+    PlotConf = {}
+
+    PlotConf["Type"] = "Lines"
+    PlotConf["FigSize"] = (8.4, 6.6)
+    PlotConf["Title"] = "ENU Position Error from TLSA on Year 2015" \
+                        " DoY 006"
+    PlotConf['Legend'] = True
+
+    PlotConf["yLabel"] = "ENU-PE[m]"
+
+    PlotConf["xLabel"] = "Hour of DoY 006"
+    PlotConf["xTicks"] = range(0, 25)
+    PlotConf["xLim"] = [0, 24]
+
+    PlotConf["Grid"] = 1
+
+    PlotConf["Marker"] = '-'
+    PlotConf["LineWidth"] = .5
+
+    PlotConf["xData"] = {}
+    PlotConf["yData"] = {}
+
+    PlotConf["xData"]['EPE[m]'] = PosData[POS_IDX["SOD"]] / GnssConstants.S_IN_H
+    PlotConf["yData"]['EPE[m]'] = PosData[POS_IDX["EPE[m]"]]
+    PlotConf["xData"]['NPE[m]'] = PosData[POS_IDX["SOD"]] / GnssConstants.S_IN_H
+    PlotConf["yData"]['NPE[m]'] = PosData[POS_IDX["NPE[m]"]]
+    PlotConf["xData"]['UPE[m]'] = PosData[POS_IDX["SOD"]] / GnssConstants.S_IN_H
+    PlotConf["yData"]['UPE[m]'] = PosData[POS_IDX["UPE[m]"]]
+
+    PlotConf["Path"] = sys.argv[1] + '/OUT/POS/' + 'POS_ENU_PE_Vs_TIME_TLSA_D006Y15_EPE.png'
+
+    generatePlot(PlotConf)
 
 def PLOT_POS_HVPE_vs_TIME(PosData):
     pass
