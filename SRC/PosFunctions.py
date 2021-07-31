@@ -180,4 +180,41 @@ def PLOT_POS_HVPE_vs_TIME(PosData):
     generatePlot(PlotConf)
 
 def PLOT_POS_NPE_vs_EPE(PosData):
-    pass
+    PlotConf = {}
+
+    PlotConf["Type"] = "Lines"
+    PlotConf["FigSize"] = (8.4, 6.6)
+    PlotConf["Title"] = "EPE Vs NPE from TLSA on Year 2015" \
+                        " DoY 006"
+
+    PlotConf["yLabel"] = "NPE[m]"
+    # PlotConf["yLim"] = [2522.25, 2522.28]
+    # PlotConf['yticklabel_format'] = 'plain'  # Avoid scientific notation.
+
+    PlotConf["xLabel"] = "EPE[m]"
+    # PlotConf["xTicks"] = range(0, 25)
+    # PlotConf["xLim"] = [0, 24]
+
+    PlotConf["Grid"] = 1
+
+    PlotConf["Marker"] = '.'
+    PlotConf["LineWidth"] = 1
+
+    PlotConf["ColorBar"] = "gnuplot"
+    PlotConf["ColorBarLabel"] = "HDOP"
+    # PlotConf["ColorBarMin"] = 0
+    # PlotConf["ColorBarMax"] = max(unique(LosData[LOS_IDX["PRN"]])) + 1
+    # PlotConf["zTicks"] = sorted(unique(LosData[LOS_IDX["PRN"]]))
+    # PlotConf["zTicksLabels"] = sorted(unique(LosData[LOS_IDX["PRN"]]))
+
+    PlotConf["xData"] = {}
+    PlotConf["yData"] = {}
+    PlotConf["zData"] = {}
+    Label = 0
+    PlotConf["xData"][Label] = PosData[POS_IDX["EPE[m]"]]
+    PlotConf["yData"][Label] = PosData[POS_IDX["NPE[m]"]]
+    PlotConf["zData"][Label] = PosData[POS_IDX["HDOP"]]
+
+    PlotConf["Path"] = sys.argv[1] + '/OUT/POS/' + 'POS_NPE_Vs_EPE_TLSA_D006Y15.png'
+
+    generatePlot(PlotConf)

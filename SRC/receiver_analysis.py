@@ -288,3 +288,11 @@ if (Conf['PLOT_POS_HVPE_vs_TIME'] == '1'):
 
     PosFunctions.PLOT_POS_HVPE_vs_TIME(PosData)
 
+if (Conf['PLOT_POS_NPE_vs_EPE'] == '1'):
+    PosData = read_csv(PosFile, delim_whitespace=True, skiprows=1, header=None, \
+                       usecols=[POS_IDX['EPE[m]'], POS_IDX['NPE[m]'], POS_IDX['HDOP'], POS_IDX['SOD']])
+
+    print('Plot EPE vs NPE (HDOP)  ...')
+
+    PosFunctions.PLOT_POS_NPE_vs_EPE(PosData)
+
